@@ -61,8 +61,30 @@ sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 adb version
 
 # 6) Повторный запуск проекта
-cd /workspace/solana-mobile-pay
+cd /workspaces/solana-mobile-pay/solana-mobile-pay || cd /workspace/solana-mobile-pay/solana-mobile-pay
 npx expo run:android
 ```
 
 > Если вы запускаете на удалённом устройстве/эмуляторе, убедитесь, что `adb devices` показывает хотя бы одно устройство.
+
+
+## 4) Если появляется `ConfigError: The expected package.json path ... does not exist`
+
+Это значит, что вы запустили Expo-команду не из папки приложения (где лежит `package.json`). После `create-expo-app` проект обычно создаётся во вложенной директории `solana-mobile-pay/`.
+
+Проверьте и перейдите в корректную папку:
+
+```bash
+cd /workspaces/solana-mobile-pay
+find . -maxdepth 2 -name package.json
+
+# если найден ./solana-mobile-pay/package.json
+cd solana-mobile-pay
+npx expo run:android
+```
+
+Быстрая проверка перед запуском:
+
+```bash
+test -f package.json && echo "OK: package.json найден" || echo "Ошибка: вы не в корне RN-приложения"
+```

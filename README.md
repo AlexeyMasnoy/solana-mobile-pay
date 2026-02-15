@@ -29,7 +29,7 @@ Solana Mobile Pay ориентирован на нативные Android-сце�
 
 ## 3) Если `expo run:android` падает с `Failed to resolve the Android SDK path` и `spawn adb ENOENT`
 
-В Codespace обычно не настроены Android SDK и `adb` «из коробки». Ошибка из вашего лога означает, что Expo не нашёл SDK по пути `/home/codespace/Android/sdk` и не нашёл `adb` в `PATH`.
+В Codespace обычно не настроены Android SDK и `adb` «из коробки». Ошибка из вашего лога означает, что Expo не нашёл SDK по пути `/home/codespace/Android/sdk` (дефолт для Codespaces) и не нашёл `adb` в `PATH`.
 
 Запустите:
 
@@ -39,15 +39,15 @@ sudo apt-get update
 sudo apt-get install -y openjdk-17-jdk wget unzip
 
 # 2) Android SDK command-line tools
-mkdir -p "$HOME/Android/cmdline-tools"
-cd "$HOME/Android"
+mkdir -p "$HOME/Android/sdk/cmdline-tools"
+cd "$HOME/Android/sdk"
 wget -O cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
 unzip -q cmdline-tools.zip -d cmdline-tools
 mv cmdline-tools/cmdline-tools cmdline-tools/latest
 
 # 3) Переменные окружения
 cat >> ~/.bashrc <<'BASHRC'
-export ANDROID_HOME=$HOME/Android
+export ANDROID_HOME=$HOME/Android/sdk
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator
 BASHRC
